@@ -4,6 +4,8 @@ using System.Text;
 
 namespace PlaylistsNET.Models
 {
+    using System.Globalization;
+
     public abstract class HlsPlaylistEntry : BasePlaylistEntry
     {
         public Dictionary<string, string> CustomProperties { get; set; }
@@ -37,7 +39,7 @@ namespace PlaylistsNET.Models
 
     public class HlsMediaPlaylistEntry : HlsPlaylistEntry
     {
-        public int Duration { get; set; }
+        public double Duration { get; set; }
         public string Title { get; set; }
         public long MediaSequence { get; set; }
         public bool Discontinuity { get; set; }
@@ -71,8 +73,7 @@ namespace PlaylistsNET.Models
                 sb.AppendLine("#EXT-X-DISCONTINUITY");
             }
 
-            string durationTitle = String.Join(",",
-                new string[] { Duration == 0 ? "" : Duration.ToString(), Title });
+            string durationTitle = String.Join(",", Duration == 0 ? "" : Duration.ToString(), Title);
             CheckAndAppend("#EXTINF", durationTitle, sb, dt => !dt.Equals(","));
 
             foreach(var kv in CustomProperties)

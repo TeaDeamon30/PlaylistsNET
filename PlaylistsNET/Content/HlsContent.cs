@@ -204,10 +204,10 @@ namespace PlaylistsNET.Content
                     continue;
                 }
 
-                var match = Regex.Match(currentLine, @"^#EXTINF:(-?\d*),(.*)$");
+                var match = Regex.Match(currentLine, @"^#EXTINF:(-?\d*)(.\d*)?,(.*)$");
                 if (match.Success)
                 {
-                    currentEntry.Duration = string.IsNullOrEmpty(match.Groups[1].Value) ? 0 : int.Parse(match.Groups[1].Value);
+                    currentEntry.Duration = string.IsNullOrEmpty(match.Groups[1].Value) ? 0 : double.Parse(match.Groups[1].Value);
                     currentEntry.Title = match.Groups[2].Value;
                     continue;
                 }
